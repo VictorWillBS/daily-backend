@@ -1,11 +1,12 @@
-import { CreateUser } from "../types/authtypes";
+import { CreateUser, Login } from "../types/authtypes";
 import authRepository from "../repositories/authRepository";
 import cryptData from "../utils/cryptData";
+import jsonFunctions from "../utils/tokenFuntions";
 async function createUser(userData: CreateUser) {
   const userExist = await authRepository.findUserByEmail(userData.email);
   if (userExist) {
     console.log("cai aq");
-    throw { code: "Conflict", message: "User already exist." };
+    throw { code: "Conflict", message: "User Already Exist." };
   }
   const encriptPassword = cryptData.encriptByHash(userData.password);
   const userCreated = await authRepository.insert({
@@ -15,6 +16,27 @@ async function createUser(userData: CreateUser) {
   return userCreated;
 }
 
+async function login(userData: Login) {
+  const userExist = await authRepository.findUserByEmail(userData.email);
+  if (!userExist) {
+    throw { code: "Unauthorized", message: "Email or Password Are Incorrect." };
+  }
+  const passwordIsCorrect = cryptData.compareHash(
+    userData.password,
+    userExist.password
+  );
+  if (!passwordIsCorrect) {
+    throw { code: "Unauthorized", message: "Email or Password Are Incorrect." };
+  }
+  const encryptId = cryptData.encriptByHash(userExist.id.toString());
+  const token = jsonFunctions.createJWT({
+    id: encryptId,
+    name: userExist.name,
+  });
+  return token;
+}
+
 export default {
   createUser,
+  login,
 };
