@@ -15,7 +15,7 @@ const signUpSchema = joi.object({
     "string.max": `"password" should have a maximum length of 30 characters`,
     "any.required": `"password" is a required field`,
   }),
-  photo: joi.string().regex(re).rule({
+  photo: joi.string().empty("").regex(re).rule({
     message: `"photo" should be a link of a Image (format allowed: png,gif,webp,jpeg,jpg.)`,
   }),
 });
