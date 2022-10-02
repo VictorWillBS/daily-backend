@@ -28,7 +28,7 @@ async function login(userData: Login) {
   if (!passwordIsCorrect) {
     throw { code: "Unauthorized", message: "Email or Password Are Incorrect." };
   }
-  const encryptId = cryptData.encriptByHash(userExist.id.toString());
+  const encryptId = cryptData.encrypt(userExist.id.toString());
   const token = jsonFunctions.createJWT({
     id: encryptId,
     name: userExist.name,
