@@ -16,6 +16,14 @@ async function getAll(userId: number) {
   return userQuestions;
 }
 
+async function getAllAnswered(userId: number) {
+  const userQuestions: Questions[] = await prisma.questions.findMany({
+    where: { userId },
+    include: { answer: true },
+  });
+  return userQuestions;
+}
+
 async function getByQuestion(question: string, userId: number) {
   const userQuestions: Questions | null = await prisma.questions.findFirst({
     where: { question, userId },
@@ -34,4 +42,4 @@ async function deleteById(id: number) {
   }
 }
 
-export default { insert, getAll, deleteById, getByQuestion };
+export default { insert, getAll, deleteById, getByQuestion, getAllAnswered };
