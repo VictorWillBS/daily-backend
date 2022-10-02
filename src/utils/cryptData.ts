@@ -9,6 +9,8 @@ function encrypt(data: string) {
 }
 
 function decrypt(data: string) {
+  console.log(data);
+
   const dataDecrypt: string = cryptr.decrypt(data);
   return dataDecrypt;
 }
