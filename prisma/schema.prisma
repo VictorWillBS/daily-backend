@@ -18,6 +18,7 @@ model Users{
   photo String?
   question Questions[]
   fellings Fellings[]
+  answer Answer[]
 
   @@map("users")
 
@@ -26,11 +27,25 @@ model Users{
 model Questions{
   id Int @id @default(autoincrement())
   question String 
-  answer String
   user Users @relation(fields: [userId], references: [id])
   userId Int 
+  answer Answer[]
+  date DateTime @default(now())
   @@unique([question,userId])
   @@map("question")
+
+}
+
+model Answer{
+  id Int @id @default(autoincrement())
+  answer String
+  question Questions @relation(fields: [questionId], references: [id])  
+  questionId Int 
+  date DateTime
+  user Users @relation(fields: [userId], references: [id])
+  userId Int 
+  @@unique([answer,questionId])
+  @@map("answer")
 
 }
 model Fellings{
