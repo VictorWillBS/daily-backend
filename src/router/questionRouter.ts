@@ -12,5 +12,6 @@ questionRouter.post(
   validSchema(questionSchema),
   questionController.createQuestion
 );
+questionRouter.get("/questions", verifyToken, questionController.getQuestions);
 
 export default questionRouter;

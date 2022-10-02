@@ -14,4 +14,11 @@ async function createQuestion(req: Request, res: Response) {
   res.status(201).send(questionCreated);
 }
 
-export default { createQuestion };
+async function getQuestions(req: Request, res: Response) {
+  const user = res.locals.tokenDecoded;
+  const id = cryptData.decrypt(user.id);
+  const questions = await questionService.getQuestions(Number(id));
+  res.send(questions);
+}
+
+export default { createQuestion, getQuestions };

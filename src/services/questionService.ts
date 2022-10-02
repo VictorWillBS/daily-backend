@@ -1,3 +1,4 @@
+import { Questions } from "@prisma/client";
 import questionRepository from "../repositories/questionRepository";
 import { CreateQuestion } from "../types/questionTypes";
 
@@ -14,4 +15,8 @@ async function createQuestion(questionData: CreateQuestion, userId: number) {
   return { id: questionCreated.id, question: questionCreated.question };
 }
 
-export default { createQuestion };
+async function getQuestions(userId: number) {
+  const questions: Questions[] = await questionRepository.getAll(userId);
+  return questions;
+}
+export default { createQuestion, getQuestions };
