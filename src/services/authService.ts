@@ -33,7 +33,12 @@ async function login(userData: Login) {
     id: encryptId,
     name: userExist.name,
   });
-  return token;
+  return {
+    username: userExist.name,
+    userId: userExist.id,
+    photo: userExist.photo,
+    token,
+  };
 }
 
 export default {
