@@ -49,9 +49,15 @@ model Answer{
 model Fellings{
   id Int @id @default(autoincrement())
   day String 
-  felling String
+  felling Felling
   user Users @relation(fields: [userId], references: [id])
   userId Int 
   @@unique([felling,day])
   @@map("fellings")
+}
+
+enum Felling {
+  TRISTE
+  NEUTRO
+  FELIZ
 }
