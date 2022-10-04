@@ -21,4 +21,15 @@ async function getQuestions(req: Request, res: Response) {
   res.send(questions);
 }
 
-export default { createQuestion, getQuestions };
+async function deleteQuestion(req: Request, res: Response) {
+  const user = res.locals.tokenDecoded;
+  const userId = cryptData.decrypt(user.id);
+  const { id } = req.params;
+  const questions = await questionService.deleteQuestion(
+    Number(id),
+    Number(userId)
+  );
+  res.send(questions);
+}
+
+export default { createQuestion, getQuestions, deleteQuestion };

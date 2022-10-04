@@ -16,7 +16,21 @@ async function createQuestion(questionData: CreateQuestion, userId: number) {
 }
 
 async function getQuestions(userId: number) {
-  const questions: Questions[] = await questionRepository.getAll(userId);
+  const questions: Questions[] = await questionRepository.getAllAnswered(
+    userId
+  );
   return questions;
 }
-export default { createQuestion, getQuestions };
+
+async function deleteQuestion(questionId: number, userId: number) {
+  const questionExist = await questionRepository.getById(questionId, userId);
+
+  if (!questionExist) {
+    throw { code: "Not Found", message: "Question non Exist." };
+  }
+  const question = await questionRepository.deleteById(questionId, userId);
+
+  return question;
+}
+
+export default { createQuestion, getQuestions, deleteQuestion };

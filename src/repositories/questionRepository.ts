@@ -31,15 +31,25 @@ async function getByQuestion(question: string, userId: number) {
   return userQuestions;
 }
 
-async function deleteById(id: number) {
-  try {
-    await prisma.questions.delete({
-      where: { id },
-    });
-    return true;
-  } catch (error) {
-    return false;
-  }
+async function getById(id: number, userId: number) {
+  const userQuestions: Questions | null = await prisma.questions.findFirst({
+    where: { id, userId },
+  });
+  return userQuestions;
 }
 
-export default { insert, getAll, deleteById, getByQuestion, getAllAnswered };
+async function deleteById(id: number, userId: number) {
+  await prisma.questions.deleteMany({
+    where: { id, userId },
+  });
+  return true;
+}
+
+export default {
+  insert,
+  getAll,
+  deleteById,
+  getByQuestion,
+  getAllAnswered,
+  getById,
+};

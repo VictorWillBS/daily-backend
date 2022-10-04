@@ -13,5 +13,10 @@ questionRouter.post(
   questionController.createQuestion
 );
 questionRouter.get("/questions", verifyToken, questionController.getQuestions);
+questionRouter.delete(
+  "/questions/:id",
+  verifyToken,
+  questionController.deleteQuestion
+);
 
 export default questionRouter;
