@@ -48,7 +48,7 @@ model Answer{
 }
 model Fellings{
   id Int @id @default(autoincrement())
-  day DateTime 
+  day String 
   felling String
   user Users @relation(fields: [userId], references: [id])
   userId Int 
