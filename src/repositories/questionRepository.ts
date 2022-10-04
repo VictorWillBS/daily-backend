@@ -9,9 +9,10 @@ async function insert(questionData: CreateQuestion, userId: number) {
   return questionCreated;
 }
 
-async function getAll(userId: number) {
+async function getAllToday(userId: number, date: string) {
   const userQuestions: Questions[] = await prisma.questions.findMany({
-    where: { userId },
+    where: { userId, isAble: true },
+    include: { answer: { where: { date } } },
   });
   return userQuestions;
 }
@@ -33,23 +34,35 @@ async function getByQuestion(question: string, userId: number) {
 
 async function getById(id: number, userId: number) {
   const userQuestions: Questions | null = await prisma.questions.findFirst({
-    where: { id, userId },
+    where: { id, userId, isAble: true },
   });
   return userQuestions;
 }
 
-async function deleteById(id: number, userId: number) {
-  await prisma.questions.deleteMany({
+async function disableById(id: number, userId: number) {
+  await prisma.questions.updateMany({
     where: { id, userId },
+    data: { isAble: false },
   });
   return true;
+}
+async function enableById(id: number, userId: number) {
+  await prisma.questions.updateMany({
+    where: { id, userId },
+    data: { isAble: true },
+  });
+  const questionCreated = await prisma.questions.findFirst({
+    where: { id, userId },
+  });
+  return questionCreated;
 }
 
 export default {
   insert,
-  getAll,
-  deleteById,
+  getAllToday,
+  disableById,
   getByQuestion,
   getAllAnswered,
   getById,
+  enableById,
 };

@@ -16,7 +16,7 @@ questionRouter.get("/questions", verifyToken, questionController.getQuestions);
 questionRouter.delete(
   "/questions/:id",
   verifyToken,
-  questionController.deleteQuestion
+  questionController.disableQuestion
 );
 
 export default questionRouter;

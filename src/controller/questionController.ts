@@ -21,15 +21,15 @@ async function getQuestions(req: Request, res: Response) {
   res.send(questions);
 }
 
-async function deleteQuestion(req: Request, res: Response) {
+async function disableQuestion(req: Request, res: Response) {
   const user = res.locals.tokenDecoded;
   const userId = cryptData.decrypt(user.id);
   const { id } = req.params;
-  const questions = await questionService.deleteQuestion(
+  const questions = await questionService.disableQuestion(
     Number(id),
     Number(userId)
   );
   res.send(questions);
 }
 
-export default { createQuestion, getQuestions, deleteQuestion };
+export default { createQuestion, getQuestions, disableQuestion };
