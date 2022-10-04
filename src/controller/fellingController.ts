@@ -13,4 +13,13 @@ async function createFelling(req: Request, res: Response) {
   );
   res.status(201).send(fellingInserted);
 }
-export default { createFelling };
+
+async function getFellingToday(req: Request, res: Response) {
+  const user = res.locals.tokenDecoded;
+  const id = cryptData.decrypt(user.id);
+  const felling = await fellingService.getFellingToday(Number(id));
+
+  res.status(200).send(felling);
+}
+
+export default { createFelling, getFellingToday };

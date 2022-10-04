@@ -6,7 +6,7 @@ async function createFelling(fellingData: CreateFelling, userId: number) {
     fellingData.day,
     userId
   );
-  if (fellingExist) {
+  if (fellingExist.length) {
     throw { code: "Conflict", message: "Felling Already Exist." };
   }
   const fellingUpper = fellingData.felling.toUpperCase();
@@ -18,4 +18,10 @@ async function createFelling(fellingData: CreateFelling, userId: number) {
   return fellingInserted;
 }
 
-export default { createFelling };
+async function getFellingToday(userId: number) {
+  const today = generateDate(new Date());
+  const felling = await fellingRepository.getByDay(today, userId);
+
+  return felling;
+}
+export default { createFelling, getFellingToday };

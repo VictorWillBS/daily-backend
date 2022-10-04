@@ -12,5 +12,10 @@ fellingRouter.post(
   validSchema(fellingSchema),
   fellingController.createFelling
 );
+fellingRouter.get(
+  "/felling/today",
+  verifyToken,
+  fellingController.getFellingToday
+);
 
 export default fellingRouter;

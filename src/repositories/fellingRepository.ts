@@ -26,7 +26,7 @@ async function getAll(userId: number) {
 }
 
 async function getByDay(day: string | any, userId: number) {
-  const fellings: Fellings | null = await prisma.fellings.findFirst({
+  const fellings: Fellings[] | null = await prisma.fellings.findMany({
     where: { userId, day },
   });
   return fellings;
