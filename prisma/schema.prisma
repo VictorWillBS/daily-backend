@@ -29,6 +29,7 @@ model Questions{
   user Users @relation(fields: [userId], references: [id])
   userId Int 
   answer Answer[]
+  isAble Boolean @default(true)
   date DateTime? @default(now())
   @@unique([question,userId])
   @@map("question")
