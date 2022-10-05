@@ -52,7 +52,7 @@ model Fellings{
   felling Felling
   user Users @relation(fields: [userId], references: [id])
   userId Int 
-  @@unique([felling,day])
+  @@unique([felling,day,userId])
   @@map("fellings")
 }
 
