@@ -7,8 +7,8 @@ async function insert(
   fellingUpper: any,
   userId: number
 ) {
+  console.log(fellingUpper);
   try {
-    console.log(fellingUpper);
     const fellingInserted: Fellings = await prisma.fellings.create({
       data: { ...fellingData, felling: "TRISTE", userId },
     });

@@ -16,8 +16,9 @@ async function createFelling(req: Request, res: Response) {
 
 async function getFellingToday(req: Request, res: Response) {
   const user = res.locals.tokenDecoded;
+  const date = req.params.date || "";
   const id = cryptData.decrypt(user.id);
-  const felling = await fellingService.getFellingToday(Number(id));
+  const felling = await fellingService.getFellingToday(date, Number(id));
 
   res.status(200).send(felling);
 }

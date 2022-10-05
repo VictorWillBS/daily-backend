@@ -18,8 +18,8 @@ async function createFelling(fellingData: CreateFelling, userId: number) {
   return fellingInserted;
 }
 
-async function getFellingToday(userId: number) {
-  const today = generateDate(new Date());
+async function getFellingToday(day: string, userId: number) {
+  const today = day || generateDate(new Date());
   const felling = await fellingRepository.getByDay(today, userId);
 
   return felling;

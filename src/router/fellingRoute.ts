@@ -17,5 +17,10 @@ fellingRouter.get(
   verifyToken,
   fellingController.getFellingToday
 );
+fellingRouter.get(
+  "/felling/:date",
+  verifyToken,
+  fellingController.getFellingToday
+);
 
 export default fellingRouter;
