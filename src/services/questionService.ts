@@ -34,6 +34,14 @@ async function getQuestions(userId: number) {
   return questions;
 }
 
+async function getQuestionsByDate(date: string, userId: number) {
+  const questions: Questions[] | any = await questionRepository.getByDate(
+    date,
+    userId
+  );
+  return questions;
+}
+
 async function disableQuestion(questionId: number, userId: number) {
   const questionExist = await questionRepository.getById(questionId, userId);
 
@@ -45,4 +53,9 @@ async function disableQuestion(questionId: number, userId: number) {
   return question;
 }
 
-export default { createQuestion, getQuestions, disableQuestion };
+export default {
+  createQuestion,
+  getQuestions,
+  disableQuestion,
+  getQuestionsByDate,
+};

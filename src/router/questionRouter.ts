@@ -13,6 +13,12 @@ questionRouter.post(
   questionController.createQuestion
 );
 questionRouter.get("/questions", verifyToken, questionController.getQuestions);
+questionRouter.get(
+  "/questions/:date",
+  verifyToken,
+  questionController.getQuestionsByDate
+);
+
 questionRouter.delete(
   "/questions/:id",
   verifyToken,

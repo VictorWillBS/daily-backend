@@ -32,6 +32,19 @@ async function getByQuestion(question: string, userId: number) {
   return userQuestions;
 }
 
+async function getByDate(date: string, userId: number) {
+  console.log("entrei");
+  try {
+    const userQuestions: Questions[] = await prisma.questions.findMany({
+      include: { answer: { where: { date } } },
+      where: { userId },
+    });
+    return userQuestions;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function getById(id: number, userId: number) {
   const userQuestions: Questions | null = await prisma.questions.findFirst({
     where: { id, userId, isAble: true },
@@ -65,4 +78,5 @@ export default {
   getAllAnswered,
   getById,
   enableById,
+  getByDate,
 };

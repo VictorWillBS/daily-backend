@@ -21,6 +21,14 @@ async function getQuestions(req: Request, res: Response) {
   res.send(questions);
 }
 
+async function getQuestionsByDate(req: Request, res: Response) {
+  const { date } = req.params;
+  const user = res.locals.tokenDecoded;
+  const id = cryptData.decrypt(user.id);
+  const questions = await questionService.getQuestionsByDate(date, Number(id));
+  res.send(questions);
+}
+
 async function disableQuestion(req: Request, res: Response) {
   const user = res.locals.tokenDecoded;
   const userId = cryptData.decrypt(user.id);
@@ -32,4 +40,9 @@ async function disableQuestion(req: Request, res: Response) {
   res.send(questions);
 }
 
-export default { createQuestion, getQuestions, disableQuestion };
+export default {
+  createQuestion,
+  getQuestions,
+  disableQuestion,
+  getQuestionsByDate,
+};
