@@ -9,7 +9,7 @@ export default function verifyToken(
   next: NextFunction
 ) {
   const token: string | any = req.headers.authorization;
-  if (!token.startsWith("Bearer")) {
+  if (!token || !token.startsWith("Bearer")) {
     return res.status(401).send("Invalid Token.");
   }
 
