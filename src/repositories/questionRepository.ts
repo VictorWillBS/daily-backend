@@ -8,7 +8,12 @@ async function insert(questionData: CreateQuestion, userId: number) {
   });
   return questionCreated;
 }
-
+async function getAllAble(userId: number) {
+  const userQuestions: Questions[] = await prisma.questions.findMany({
+    where: { userId, isAble: true },
+  });
+  return userQuestions;
+}
 async function getAllToday(userId: number, date: string) {
   const userQuestions: Questions[] = await prisma.questions.findMany({
     where: { userId, isAble: true },
@@ -79,4 +84,5 @@ export default {
   getById,
   enableById,
   getByDate,
+  getAllAble,
 };

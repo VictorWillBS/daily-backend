@@ -10,8 +10,20 @@ async function createQuestion(questionData: CreateQuestion, userId: number) {
   );
 
   if (questionExist?.isAble) {
-    throw { code: "Conflict", message: "Question Already Exist." };
+    throw {
+      code: "Conflict",
+      message: "Já existe uma pergunta com esse nome.",
+    };
   }
+  const questionAble = await questionRepository.getAllAble(userId);
+
+  if (questionAble.length >= 5) {
+    throw {
+      code: "Bad Request",
+      message: "Você deve ter no máximo 5 questões.",
+    };
+  }
+
   if (questionExist && !questionExist.isAble) {
     const questionCreated = await questionRepository.enableById(
       questionExist.id,
@@ -46,7 +58,7 @@ async function disableQuestion(questionId: number, userId: number) {
   const questionExist = await questionRepository.getById(questionId, userId);
 
   if (!questionExist) {
-    throw { code: "Not Found", message: "Question non Exist." };
+    throw { code: "Not Found", message: "Questão não encontrada." };
   }
   const question = await questionRepository.disableById(questionId, userId);
 
