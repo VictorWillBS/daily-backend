@@ -38,11 +38,10 @@ async function getByQuestion(question: string, userId: number) {
 }
 
 async function getByDate(date: string, userId: number) {
-  console.log("entrei");
   try {
     const userQuestions: Questions[] = await prisma.questions.findMany({
       include: { answer: { where: { date } } },
-      where: { userId },
+      where: { userId, isAble: false },
     });
     return userQuestions;
   } catch (error) {

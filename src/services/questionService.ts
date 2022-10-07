@@ -47,11 +47,18 @@ async function getQuestions(userId: number) {
 }
 
 async function getQuestionsByDate(date: string, userId: number) {
-  const questions: Questions[] | any = await questionRepository.getByDate(
-    date,
-    userId
+  const questionsDisables: Questions[] | any =
+    await questionRepository.getByDate(date, userId);
+  const questionsDisablesAnswered = questionsDisables.filter(
+    (question: any) => {
+      if (question.answer.length) {
+        return question;
+      }
+    }
   );
-  return questions;
+  const questionsAbles = await questionRepository.getAllToday(userId, date);
+
+  return [...questionsDisablesAnswered, ...questionsAbles];
 }
 
 async function disableQuestion(questionId: number, userId: number) {
