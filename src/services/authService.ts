@@ -5,7 +5,6 @@ import jsonFunctions from "../utils/tokenFuntions";
 async function createUser(userData: CreateUser) {
   const userExist = await authRepository.findUserByEmail(userData.email);
   if (userExist) {
-    console.log("cai aq");
     throw { code: "Conflict", message: "User Already Exist." };
   }
   const encriptPassword = cryptData.encriptByHash(userData.password);

@@ -7,7 +7,6 @@ export default async function errorHandle(
   res: Response,
   next: NextFunction
 ) {
-  console.log("entrei no error");
   if (error) {
     const statusCode = discoverStatusCode(error.code);
     return res.status(statusCode).send(error.message);
