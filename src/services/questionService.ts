@@ -37,6 +37,17 @@ async function createQuestion(questionData: CreateQuestion, userId: number) {
   return { id: questionCreated.id, question: questionCreated.question };
 }
 
+async function disableQuestion(questionId: number, userId: number) {
+  const questionExist = await questionRepository.getById(questionId, userId);
+
+  if (!questionExist) {
+    throw { code: "Not Found", message: "Questão não encontrada." };
+  }
+  const question = await questionRepository.disableById(questionId, userId);
+
+  return question;
+}
+
 async function getQuestions(userId: number) {
   const today = generateDate(new Date());
   const questions: Questions[] = await questionRepository.getAllToday(
@@ -60,18 +71,6 @@ async function getQuestionsByDate(date: string, userId: number) {
 
   return [...questionsDisablesAnswered, ...questionsAbles];
 }
-
-async function disableQuestion(questionId: number, userId: number) {
-  const questionExist = await questionRepository.getById(questionId, userId);
-
-  if (!questionExist) {
-    throw { code: "Not Found", message: "Questão não encontrada." };
-  }
-  const question = await questionRepository.disableById(questionId, userId);
-
-  return question;
-}
-
 export default {
   createQuestion,
   getQuestions,
