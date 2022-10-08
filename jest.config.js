@@ -1,16 +1,8 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-export default {
+
+module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  extensionsToTreatAsEsm: [".ts"],
-  globals: {
-    "ts-jest": {
-      useESM: true,
-    },
-  },
-  moduleNameMapper: {
-    "^(\\.{1,2}/.*)\\.js$": "$1",
-  },
   coveragePathIgnorePatterns: [
     "node_modules",
     "test-config",
@@ -22,7 +14,7 @@ export default {
     "<rootDir>/src/config",
     "<rootDir>/tests/factory",
     "<rootDir>/src/app.ts",
-    "<rootDir>/src/database.ts",
+    "<rootDir>/src/database",
     "<rootDir>/src/schemas",
     "<rootDir>/src/routers",
     "<rootDir>/src/controllers",
