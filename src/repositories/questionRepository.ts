@@ -3,7 +3,7 @@ import prisma from "../database/dabatase";
 import { CreateQuestion } from "../types/questionTypes";
 
 async function insert(questionData: CreateQuestion, userId: number) {
-  const questionCreated = await prisma.questions.create({
+  const questionCreated: Questions = await prisma.questions.create({
     data: { ...questionData, userId },
   });
   return questionCreated;
