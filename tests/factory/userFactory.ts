@@ -8,10 +8,7 @@ function allowUser() {
     photo: faker.internet.avatar(),
   };
 }
-function randomString() {
-  return faker.random.alphaNumeric(20);
-}
+
 export default {
   allowUser,
-  randomString,
 };

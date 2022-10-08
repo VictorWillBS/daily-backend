@@ -17,12 +17,7 @@ function question() {
   };
 }
 
-function randomNumber() {
-  return faker.datatype.number();
-}
-
 export default {
   allowAnswer,
   question,
-  randomNumber,
 };

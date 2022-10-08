@@ -1,6 +1,7 @@
 import userFactory from "../factory/userFactory";
 import authService from "../../src/services/authService";
 import cryptData from "../../src/utils/cryptData";
+import commonFactory from "../factory/commonFactory";
 import authRepository from "../../src/repositories/authRepository";
 import jsonFunctions from "../../src/utils/tokenFuntions";
 describe("Sign-Up Tests", () => {
@@ -9,7 +10,7 @@ describe("Sign-Up Tests", () => {
     jest.spyOn(authRepository, "findUserByEmail").mockResolvedValueOnce(null);
     jest
       .spyOn(cryptData, "encriptByHash")
-      .mockImplementationOnce(() => userFactory.randomString());
+      .mockImplementationOnce(() => commonFactory.randomString());
     jest.spyOn(authRepository, "insert").mockResolvedValueOnce(user);
 
     const result = await authService.createUser(user);
@@ -36,8 +37,8 @@ describe("Sign-Up Tests", () => {
 describe("Sign-in Tests", () => {
   it("Must Sign-in User", async () => {
     const user = userFactory.allowUser();
-    const id = userFactory.randomString();
-    const token = userFactory.randomString();
+    const id = commonFactory.randomString();
+    const token = commonFactory.randomString();
     const expectReturn = {
       username: user.name,
       userId: 1,

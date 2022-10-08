@@ -7,15 +7,10 @@ async function insert(
   fellingUpper: any,
   userId: number
 ) {
-  console.log(fellingUpper);
-  try {
-    const fellingInserted: Fellings = await prisma.fellings.create({
-      data: { ...fellingData, felling: fellingUpper, userId },
-    });
-    return fellingInserted;
-  } catch (error) {
-    console.log(error);
-  }
+  const fellingInserted: Fellings = await prisma.fellings.create({
+    data: { ...fellingData, felling: fellingUpper, userId },
+  });
+  return fellingInserted;
 }
 
 async function getAll(userId: number) {
