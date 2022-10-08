@@ -3,8 +3,6 @@ import prisma from "../database/dabatase";
 import { CreateAnswer } from "../types/answerTypes";
 
 async function insert(answerData: CreateAnswer, date: string) {
-  console.log("cheguei aq");
-
   const answerCreated: Answer = await prisma.answer.create({
     data: { ...answerData, date },
   });
