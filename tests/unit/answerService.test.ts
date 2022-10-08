@@ -3,6 +3,11 @@ import answerFactory from "../factory/answerFactory";
 import answerRepository from "../../src/repositories/answerRepository";
 import commonFactory from "../factory/commonFactory";
 import * as generateDate from "../../src/utils/generateDate";
+
+beforeEach(() => {
+  jest.resetAllMocks();
+});
+
 describe("Insert Answer", () => {
   it("Must Insert answer", async () => {
     const answer = answerFactory.allowAnswer();
@@ -43,14 +48,16 @@ describe("Insert Answer", () => {
     expect(answerRepository.getQuestionById).toBeCalled();
   });
 
-  it("Must Return Conflict, Question already answered", () => {
+  it("Must Return Conflict, Question already answered", async () => {
     const answer = answerFactory.allowAnswer();
     jest
       .spyOn(answerRepository, "getQuestionById")
       .mockResolvedValueOnce(answerFactory.question());
+
     jest.spyOn(generateDate, "default").mockImplementationOnce((): any => {
       "2022-01-01";
     });
+
     jest
       .spyOn(answerRepository, "getAnswerbyDateAndQuestionId")
       .mockResolvedValueOnce({ ...answer, id: 1, date: "2022-01-01" });
@@ -62,8 +69,5 @@ describe("Insert Answer", () => {
       code: "Conflict",
       message: "Question Already Answered Today.",
     });
-    expect(answerRepository.getAnswerbyDateAndQuestionId).toBeCalled();
-    expect(answerRepository.getQuestionById).toBeCalled();
-    expect(generateDate.default).toBeCalled();
   });
 });

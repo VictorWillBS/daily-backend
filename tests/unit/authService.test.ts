@@ -4,6 +4,11 @@ import cryptData from "../../src/utils/cryptData";
 import commonFactory from "../factory/commonFactory";
 import authRepository from "../../src/repositories/authRepository";
 import jsonFunctions from "../../src/utils/tokenFuntions";
+
+beforeEach(() => {
+  jest.resetAllMocks();
+});
+
 describe("Sign-Up Tests", () => {
   it("Must Create New User", async () => {
     const user = userFactory.allowUser();
@@ -61,7 +66,7 @@ describe("Sign-in Tests", () => {
     expect(jsonFunctions.createJWT).toBeCalled();
   });
 
-  it("Must return Unauthorized, status 401 [WRONG EMAIL]", () => {
+  it("Must return Unauthorized, status 401 [WRONG EMAIL]", async () => {
     const user = userFactory.allowUser();
     jest.spyOn(authRepository, "findUserByEmail").mockResolvedValueOnce(null);
 
@@ -73,12 +78,12 @@ describe("Sign-in Tests", () => {
     });
     expect(authRepository.findUserByEmail).toBeCalled();
   });
-  it("Must return Unauthorized, status 401 [WRONG PASSWORD]", () => {
+  it("Must return Unauthorized, status 401 [WRONG PASSWORD]", async () => {
     const user = userFactory.allowUser();
     jest
       .spyOn(authRepository, "findUserByEmail")
       .mockResolvedValueOnce({ ...user, id: 1 });
-    jest.spyOn(cryptData, "compareHash").mockImplementationOnce(() => false);
+    jest.spyOn(cryptData, "compareHash").mockReturnValueOnce(false);
 
     const result = authService.login(user);
 
@@ -86,7 +91,8 @@ describe("Sign-in Tests", () => {
       code: "Unauthorized",
       message: "Email or Password Are Incorrect.",
     });
+    await Promise.resolve();
+
     expect(authRepository.findUserByEmail).toBeCalled();
-    expect(cryptData.compareHash).toBeCalled();
   });
 });
