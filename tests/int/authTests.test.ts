@@ -3,8 +3,10 @@ import supertest from "supertest";
 import prisma from "../../src/database/dabatase";
 import authFactory from "../factory/int/authFactory";
 import commonFactory from "../factory/unit/commonFactory";
-beforeEach(() => {
-  prisma.$executeRaw`TRUNCATE users RESTART IDENTITy`;
+beforeEach(async () => {
+  await prisma.$executeRaw`
+  TRUNCATE TABLE users RESTART IDENTITY CASCADE;
+`;
 });
 
 afterAll(() => {
@@ -27,7 +29,6 @@ describe("Sing-Up User", () => {
     const signup = authFactory.allowedSingup();
     await server.post("/signup").send(signup);
     const result = await server.post("/signup").send(signup);
-    console.log(result.text);
     expect(result.status).toBe(409);
     expect(result.text).toBe("Usuário Já Existe.");
   });
