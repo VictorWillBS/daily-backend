@@ -29,9 +29,7 @@ async function createQuestion(questionData: CreateQuestion, userId: number) {
       questionExist.id,
       userId
     );
-    return questionCreated
-      ? { id: questionCreated.id, question: questionCreated.question }
-      : "";
+    return { id: questionCreated.id, question: questionCreated.question };
   }
   const questionCreated = await questionRepository.insert(questionData, userId);
   return { id: questionCreated.id, question: questionCreated.question };

@@ -68,10 +68,10 @@ async function enableById(id: number, userId: number) {
     where: { id, userId },
     data: { isAble: true },
   });
-  const questionCreated = await prisma.questions.findFirst({
+  const questionCreated = await prisma.questions.findMany({
     where: { id, userId },
   });
-  return questionCreated;
+  return questionCreated[0];
 }
 
 export default {
