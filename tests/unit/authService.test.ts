@@ -1,7 +1,7 @@
-import userFactory from "../factory/userFactory";
+import userFactory from "../factory/unit/userFactory";
 import authService from "../../src/services/authService";
 import cryptData from "../../src/utils/cryptData";
-import commonFactory from "../factory/commonFactory";
+import commonFactory from "../factory/unit/commonFactory";
 import authRepository from "../../src/repositories/authRepository";
 import jsonFunctions from "../../src/utils/tokenFuntions";
 

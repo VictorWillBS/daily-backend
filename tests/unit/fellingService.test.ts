@@ -1,8 +1,8 @@
-import fellingFactory from "../factory/fellingFactory";
+import fellingFactory from "../factory/unit/fellingFactory";
 import fellingService from "../../src/services/fellingService";
 import fellingRepository from "../../src/repositories/fellingRepository";
 import * as generateDate from "../../src/utils/generateDate";
-import commonFactory from "../factory/commonFactory";
+import commonFactory from "../factory/unit/commonFactory";
 
 beforeEach(() => {
   jest.resetAllMocks();

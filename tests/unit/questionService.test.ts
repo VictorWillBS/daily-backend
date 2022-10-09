@@ -1,7 +1,7 @@
 import questionService from "../../src/services/questionService";
 import questionRepository from "../../src/repositories/questionRepository";
-import questionFactory from "../factory/questionFactory";
-import commonFactory from "../factory/commonFactory";
+import questionFactory from "../factory/unit/questionFactory";
+import commonFactory from "../factory/unit/commonFactory";
 import * as generateDate from "../../src/utils/generateDate";
 
 beforeEach(() => {
