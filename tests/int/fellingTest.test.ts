@@ -26,7 +26,9 @@ describe("Insert Felling Test POST /felling", () => {
       .post("/felling")
       .send(felling)
       .set("Authorization", `Bearer ${token}`);
+    const fellingCreate = await prisma.fellings.findMany();
     expect(result.status).toBe(201);
+    expect(fellingCreate.length).toBe(1);
   });
   it("Insert Duplicate Felling, Expect 409", async () => {
     const token = await createToken();
@@ -39,12 +41,18 @@ describe("Insert Felling Test POST /felling", () => {
       .post("/felling")
       .send(felling)
       .set("Authorization", `Bearer ${token}`);
+    const fellingCreate = await prisma.fellings.findMany();
+
     expect(result.status).toBe(409);
+    expect(fellingCreate.length).toBe(1);
   });
   it("Try Insert Felling Sending No Token, Expect 401", async () => {
     const felling = fellingFactory.allowFelling();
     const result = await server.post("/felling").send(felling);
+    const fellingCreate = await prisma.fellings.findMany();
+
     expect(result.status).toBe(401);
+    expect(fellingCreate.length).toBe(0);
   });
 });
 
