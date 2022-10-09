@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc && npx prisma migrate deploy",
+    "start": "node dist/src/server.js",
+    "dev": "nodemon ./src/server.ts",
     "test:int": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test -- jest tests/int -i --no-cache",
-    "test:unit": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test -- jest tests/unit  -i --no-cache --coverage ",
-    "dev": "nodemon ./src/server.ts"
+    "test:unit": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test -- jest tests/unit  -i --no-cache --coverage "
   },
   "keywords": [],
   "author": "",
