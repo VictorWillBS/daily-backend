@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:int": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test -- jest tests/int -i --no-cache",
     "test:unit": "dotenv -e .env.test prisma migrate dev && dotenv -e .env.test -- jest tests/unit  -i --no-cache --coverage ",
     "dev": "nodemon ./src/server.ts"
   },
