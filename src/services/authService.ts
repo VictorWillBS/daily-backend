@@ -5,7 +5,7 @@ import jsonFunctions from "../utils/tokenFuntions";
 async function createUser(userData: CreateUser) {
   const userExist = await authRepository.findUserByEmail(userData.email);
   if (userExist) {
-    throw { code: "Conflict", message: "User Already Exist." };
+    throw { code: "Conflict", message: "Usuário Já Existe." };
   }
   const encriptPassword = cryptData.encriptByHash(userData.password);
   const userCreated = await authRepository.insert({
@@ -18,14 +18,14 @@ async function createUser(userData: CreateUser) {
 async function login(userData: Login) {
   const userExist = await authRepository.findUserByEmail(userData.email);
   if (!userExist) {
-    throw { code: "Unauthorized", message: "Email or Password Are Incorrect." };
+    throw { code: "Unauthorized", message: "Email ou Senha Está Incorreto" };
   }
   const passwordIsCorrect = cryptData.compareHash(
     userData.password,
     userExist.password
   );
   if (!passwordIsCorrect) {
-    throw { code: "Unauthorized", message: "Email or Password Are Incorrect." };
+    throw { code: "Unauthorized", message: "Email ou Senha Está Incorreto" };
   }
   const encryptId = cryptData.encrypt(userExist.id.toString());
   const token = jsonFunctions.createJWT({
