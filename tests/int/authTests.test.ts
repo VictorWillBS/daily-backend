@@ -17,7 +17,11 @@ describe("Sing-Up User", () => {
   it("Create New User, Expect 201", async () => {
     const signup = authFactory.allowedSingup();
     const result = await server.post("/signup").send(signup);
+    const userCreated = await prisma.users.findUnique({
+      where: { email: signup.email },
+    });
     expect(result.status).toBe(201);
+    expect(userCreated).not.toBeNull();
   });
   it("Create New User With Email Used, Expect 409", async () => {
     const signup = authFactory.allowedSingup();
