@@ -11,6 +11,7 @@ const router = Router();
 router.use(authRouter);
 router.use(questionRouter);
 router.use(answerRouter);
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "test") {
   router.use(testerRouter);
 }
